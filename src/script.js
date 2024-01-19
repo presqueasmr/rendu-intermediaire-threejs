@@ -17,7 +17,9 @@ const scene = new THREE.Scene()
 /**
  * Textures
  */
-const textureLoader = new THREE.TextureLoader()
+
+
+
 
 /* Models */
 const gltfLoader = new GLTFLoader()
@@ -97,10 +99,15 @@ gltfLoader.load(
     (gltf) =>
     {
         console.log(gltf)
+        
+        // cockpit.map: texture
         const cockpit = gltf.scene.children[0]
+        
         cockpit.scale.set(1.2, 1.2, 1.2)
         cockpit.position.set(-10, 0, 0)
+        
         scene.add(cockpit)
+
     }
 )
 
@@ -110,6 +117,7 @@ gltfLoader.load(
     {
         console.log(gltf)
         const cockpit = gltf.scene.children[0]
+        
         cockpit.scale.set(1.2, 1.2, 1.2)
         cockpit.position.set(10, 0, 0)
         cockpit.rotation.z = 10
@@ -122,7 +130,13 @@ gltfLoader.load(
     (gltf) =>
     {
         console.log(gltf)
+        
         const cockpit = gltf.scene.children[0]
+        cockpit.traverse((child) => {
+            if(child.isMesh){
+                child.material.metalness = 1
+            }
+        })
         cockpit.scale.set(1.2, 1.2, 1.2)
         cockpit.position.set(0, 0, 0)
         cockpit.rotation.set(Math.PI * 0.5, Math.PI * 0.75, 0) 
@@ -135,7 +149,9 @@ gltfLoader.load(
     (gltf) =>
     {
         console.log(gltf)
+        
         const cockpit = gltf.scene.children[0]
+        
         cockpit.scale.set(1.2, 1.2, 1.2)
         cockpit.position.set(0, 0.5, 0)
         cockpit.rotation.set(Math.PI * 0.5, 0, Math.PI * 0.5) 
@@ -176,7 +192,14 @@ gltfLoader.load(
     (gltf) =>
     {
         console.log(gltf)
+        const textureLoader = new THREE.TextureLoader()
+        const texture = textureLoader.load('/textures/dashboard_texture.jpg')
         const cockpit2 = gltf.scene.children[0]
+        cockpit2.traverse((child) => {
+            if(child.isMesh){
+                child.material.map = texture
+            }
+        })
         cockpit2.scale.set(8, 2, 2)
         cockpit2.position.set(0, -0.8, 3)
         cockpit2.rotation.x = Math.PI * 0.3

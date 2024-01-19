@@ -30,7 +30,7 @@ const gltfLoader = new GLTFLoader()
  */
 // Geometry
 const particlesGeometry = new THREE.BufferGeometry()
-const count = 2000
+const count = 5000
 
 const positions = new Float32Array(count * 3) 
 
@@ -38,7 +38,7 @@ for(let i = 0; i < count * 3; i++)
 {
     const randomNumber = Math.random()
 
-    if(i % 3 == 0 && randomNumber > 2 && randomNumber < -2){
+    if(i % 3 == 0 && randomNumber > 4 && randomNumber < -4){
         positions[i] = randomNumber * 300
         console.log('yoooo')
     }
@@ -189,7 +189,7 @@ gltfLoader.load(
 // Lights
 
 
-const hemisphereLight = new THREE.HemisphereLight(0x0000dd, 0x880020, 2)
+const hemisphereLight = new THREE.HemisphereLight(0x0000dd, 0x880020, 10)
 scene.add(hemisphereLight)
 
 const directionalLight = new THREE.DirectionalLight(0xB8500fc, 3)
@@ -197,6 +197,17 @@ directionalLight.position.set(1, 8, 3)
 directionalLight.lookAt(new THREE.Vector3(0,0,0))
 scene.add(directionalLight)
 
+const spotLight = new THREE.SpotLight(0xff9000, 3, Math.PI * 2, 20)
+spotLight.position.set(2.1, 1.7, 0)
+spotLight.rotation.x = Math.PI * 0.7
+scene.add(spotLight.target)
+scene.add(spotLight)
+
+const spotLight2 = new THREE.SpotLight(0xff9000, 3, Math.PI * 2, 20)
+spotLight2.position.set(-2.1, 1.7, 0)
+spotLight2.rotation.x = Math.PI * 0.7
+scene.add(spotLight2.target)
+scene.add(spotLight2)
 
 /**
  * Plane black
